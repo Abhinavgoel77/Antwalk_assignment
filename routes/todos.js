@@ -16,10 +16,14 @@ router.post('/create', async(req, res) => {
     });
   });
   
-  // getting all todo here
+  // getting all todo 
   router.get('/getall', async(req, res) => {
 
-    db.query('SELECT * FROM todos', (err, results) => {
+    const { page } = req.body;
+    const pageSize  = 2;
+    const offset = (page - 1) * pageSize;
+
+    db.query('SELECT * FROM todos LIMIT ? OFFSET ?',[pageSize,offset], (err, results) => {
         if (err) {
           console.error('Error fetching todos:', err);
           res.status(500).json({ error: 'Internal server error'});

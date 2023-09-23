@@ -6,7 +6,6 @@ const db = require('../db/db');
 router.post('/register', async (req, res) => {
     const { username, email} = req.body;
   
-  
     // Insert user into the database
     db.query('INSERT INTO users (username, email) VALUES (?, ?)', [username, email], (err, results) => {
       if (err) {
